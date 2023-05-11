@@ -1,13 +1,14 @@
 import csv
 
+hallOfFame = []
 listOfQuestions = []
 
 def load_questions(questionSet):
     listOfQuestions = []
     with open(questionSet,newline='') as csvfile:
         my_reader = csv.reader(csvfile)
-    for row in my_reader:
-        listOfQuestions.append(row)
+        for row in my_reader:
+            listOfQuestions.append(row)
     return listOfQuestions
 
 
@@ -24,11 +25,18 @@ def ask_question(question):
     return score    
 
 
+def show_high_score():
+    hallOfFame.append(newScore)
+    hallOfFame.sort(reverse=True)
+    for m in range(1,hallOfFame+1):
+        print(f"No.{m}: {hallOfFame[m-1]}")
+        
+
 def run_quiz():
     global newScore
     newScore = [ask_question(load_questions("quiz_questions.csv")),input("What is your name")]
     print("This is your score: {newScore[1]}")
-
+    show_high_score()
 
 if __name__ == "__main__":
     run_quiz()
